@@ -1,0 +1,20 @@
+Dataset Information:
+Brazil Housing is an Public dataset. In this dataset there are total 13 features and 10692 data-points.
+
+The features columns in the dataset are:
+
+id: identificacao
+city: Cidade onde o imóvel está localizada / City where the property is located
+area: Area do imovel / Property area
+rooms: Numero de quartos/ Quantity of rooms
+bathroom: Numero de banheiros / Quantity of bathroom
+parking spaces: Numero de vagas / Quantity of parking spaces
+floor: Andar / Floor
+animal: Aceita animais? / Acept animals?
+furniture: Mobilhada? / Furniture?
+hoa: Valor do condominio / Homeowners association tax
+rent amount (R$): Valor do Aluguel / Rent amount
+property tax (R$): IPTU / Property tax
+fire insurance (R$): Seguro Incendio / Fire Insurance
+total (R$): Valor total / Total
+

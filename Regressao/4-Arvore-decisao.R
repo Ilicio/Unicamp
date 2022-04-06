@@ -13,7 +13,7 @@
 # definindo semente para particoes
 set.seed(2020)
 
-# criando particıes treino e teste - 80% para treino
+# criando partic√µes treino e teste - 80% para treino
 treino_index = sample(seq_len(nrow(dados_AD)), size = nrow(dados_AD)*0.8)
 TREINO_AD <- dados_AD[treino_index, ]
 VALIDACAO_AD <- dados_AD[-treino_index, ]
@@ -27,7 +27,7 @@ dim (VALIDACAO_AD)
 #  CRIANDO ARVORE
 #========================================================================
 
-# ajuste uma arvore de regress„o ao conjunto de treinamento
+# ajuste uma arvore de regress√£o ao conjunto de treinamento
 tree.RENTALHOUSES = tree(aluguel~., TREINO_AD)
 summary(tree.RENTALHOUSES)
 
@@ -35,7 +35,7 @@ summary(tree.RENTALHOUSES)
 plot(tree.RENTALHOUSES)
 text(tree.RENTALHOUSES, pretty=0)
 
-# usando a arvore n„o podada para fazer previsoes no conjunto de testes
+# usando a arvore n√£o podada para fazer previsoes no conjunto de testes
 yhat=predict(tree.RENTALHOUSES ,newdata = VALIDACAO_AD)
 RENTALHOUSES.test=VALIDACAO_AD[, "aluguel"]
 plot(yhat, RENTALHOUSES.test)
@@ -45,12 +45,12 @@ abline(0,1)
 dados_predicao_TESTE_AD = data.frame(cbind(Aluguel=VALIDACAO_AD$aluguel,predicao_teste=yhat))
 head(dados_predicao_TESTE_AD)
 
-# gerando gr·ficos de previsıes e comparando com atuais
+# gerando gr√°ficos de previs√µes e comparando com atuais
 plot(yhat,type = "l",lty=1.8,col="blue")
-plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="PrediÁ„o de Aluguel", ylab="Dados de Teste")
+plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="Predi√ß√£o de Aluguel", ylab="Dados de Teste")
 lines(yhat,type = "l",col = "blue")
 
-# encontrando acur·cia
+# encontrando acur√°cia
 min_max_accuracy = mean(apply(dados_predicao_TESTE_AD,1,min) / apply(dados_predicao_TESTE_AD, 1, max))
 min_max_accuracy
 
@@ -90,12 +90,12 @@ abline(0,1)
 dados_predicao_TESTE_AD_podada = data.frame(cbind(Aluguel=VALIDACAO_AD$aluguel,predicao_teste=yhat))
 head(dados_predicao_TESTE_AD_podada)
 
-# gerando gr·ficos de previsıes e comparando com atuais
+# gerando gr√°ficos de previs√µes e comparando com atuais
 plot(yhat,type = "l",lty=1.8,col="blue")
-plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="PrediÁ„o de Aluguel", ylab="Dados de Teste")
+plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="Predi√ß√£o de Aluguel", ylab="Dados de Teste")
 lines(yhat,type = "l",col = "blue")
 
-# encontrando acur·cia
+# encontrando acur√°cia
 min_max_accuracy = mean(apply(dados_predicao_TESTE_AD_podada,1,min) / apply(dados_predicao_TESTE_AD_podada, 1, max))
 min_max_accuracy
 
@@ -123,12 +123,12 @@ abline(0,1)
 dados_predicao_TESTE_AD_bagging = data.frame(cbind(Aluguel=VALIDACAO_AD$aluguel,predicao_teste=yhat.bag))
 head(dados_predicao_TESTE_AD_bagging)
 
-# gerando gr·ficos de previsıes e comparando com atuais
+# gerando gr√°ficos de previs√µes e comparando com atuais
 plot(yhat,type = "l",lty=1.8,col="blue")
-plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="PrediÁ„o de Aluguel", ylab="Dados de Teste")
+plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="Predi√ß√£o de Aluguel", ylab="Dados de Teste")
 lines(yhat.bag,type = "l",col = "blue")
 
-# encontrando acur·cia
+# encontrando acur√°cia
 min_max_accuracy = mean(apply(dados_predicao_TESTE_AD_bagging,1,min) / apply(dados_predicao_TESTE_AD_bagging, 1, max))
 min_max_accuracy
 
@@ -143,7 +143,7 @@ varImpPlot(bag.RENTALHOUSES)
 #  EXECUTANDO RANDOM FOREST
 #========================================================================
 
-## executando o randomForest com o argumento mtry = 3 ( randomForest() utiliza m = p/3 por padr„o, mas faremos com mais)
+## executando o randomForest com o argumento mtry = 3 ( randomForest() utiliza m = p/3 por padr√£o, mas faremos com mais)
 rf.RENTALHOUSES=randomForest(aluguel~.,data=TREINO_AD, importance=TRUE)
 rf.RENTALHOUSES
 
@@ -156,12 +156,12 @@ abline(0,1)
 dados_predicao_TESTE_AD_RF = data.frame(cbind(Aluguel=VALIDACAO_AD$aluguel,predicao_teste=yhat.rf))
 head(dados_predicao_TESTE_AD_RF)
 
-# gerando gr·ficos de previsıes e comparando com atuais
+# gerando gr√°ficos de previs√µes e comparando com atuais
 plot(yhat,type = "l",lty=1.8,col="blue")
-plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="PrediÁ„o de Aluguel", ylab="Dados de Teste")
+plot(VALIDACAO_AD$aluguel,type = "l",lty = 1.8,col = "red",xlab="Predi√ß√£o de Aluguel", ylab="Dados de Teste")
 lines(yhat.rf,type = "l",col = "blue")
 
-# encontrando acur·cia
+# encontrando acur√°cia
 min_max_accuracy = mean(apply(dados_predicao_TESTE_AD_RF,1,min) / apply(dados_predicao_TESTE_AD_RF, 1, max))
 min_max_accuracy
 

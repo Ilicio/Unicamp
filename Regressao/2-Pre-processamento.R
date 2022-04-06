@@ -26,17 +26,17 @@ sapply(dados, class)
 # mudando atributo "andar" para inteiro
 dados$andar = as.integer(as.character(dados$andar))
 
-# substituindo atributos categÛricos em n˙mericos (cidade)
+# substituindo atributos categ√≥ricos em n√∫mericos (cidade)
 dados$cidade = factor(dados$cidade,
-                      levels = c("S„o Paulo","Belo Horizonte","Rio de Janeiro","Porto Alegre","Campinas"),
+                      levels = c("S√£o Paulo","Belo Horizonte","Rio de Janeiro","Porto Alegre","Campinas"),
                       labels = c(0,1,2,3,4))
 
-# substituindo atributos categÛricos em n˙mericos (mobilhada)
+# substituindo atributos categ√≥ricos em n√∫mericos (mobilhada)
 dados$animal = factor(dados$animal,
                       levels = c("not acept","acept"),
                       labels = c(0,1))
 
-# substituindo atributos categÛricos em n˙mericos (mobilhada)
+# substituindo atributos categ√≥ricos em n√∫mericos (mobilhada)
 dados$mobilhada = factor(dados$mobilhada,
                          levels = c("not furnished","furnished"),
                          labels = c(0,1))
@@ -119,9 +119,9 @@ boxplot(dadoslimpos$impostos,xlab = "impostos")
 # adicionando titulo do conjunto de boxplot
 mtext("Outliers dos atributos - limpos", side = 3, line = -2, outer = TRUE, col = "blue")
 
-# removendo coluna total, pois n„o ser· utilizada
+# removendo coluna total, pois n√£o ser√° utilizada
 dadoslimpos = subset(dadoslimpos, select = -c(total))
 
-# criando conjunto de dados especÌficos para cada algoritmo (RL=regress„o linear, AD=·rvores de decis„o)
+# criando conjunto de dados espec√≠ficos para cada algoritmo (RL=regress√£o linear, AD=√°rvores de decis√£o)
 dados_RL = dadoslimpos
 dados_AD = dadoslimpos

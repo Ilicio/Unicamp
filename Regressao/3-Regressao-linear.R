@@ -1,5 +1,5 @@
 #========================================================================
-# TransformaÁ„o dos dados
+# Transforma√ß√£o dos dados
 #========================================================================
 
 # transformando atributo 'animal' e 'mobilhada' para inteiro
@@ -14,14 +14,14 @@ head(dados_RL)
 dados_RL = fastDummies::dummy_cols(dados_RL, select_columns = "cidade")
 head(dados_RL)
 
-# removendo coluna cidade, pois n„o ser· utilizada
+# removendo coluna cidade, pois n√£o ser√° utilizada
 dados_RL = subset(dados_RL, select = -c(cidade))
 
-# realocar atributo aluguel para a ˙ltima posiÁ„o
+# realocar atributo aluguel para a √∫ltima posi√ß√£o
 colnames(dados_RL)
 dados_RL = dados_RL[,c(1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,9)]
 
-# Renomeando nomes das cidades nos atributos 'cidade_0' atÈ 'cidade_4'
+# Renomeando nomes das cidades nos atributos 'cidade_0' at√© 'cidade_4'
 atributos_novo = c("area","quartos","banheiros","vagas","andar","animal","mobilhada","condominio","impostos","seguro","sao_paulo","belo_horizonte","rio_de_janeiro","porto_alegre","campinas","aluguel")
 
 # atribuindo colunas no dataset
@@ -53,7 +53,7 @@ dim(dados_RL)
 #head(rentalHouses_RL)
 #dim(rentalHouses_RL)
 
-# correlaÁ„o entre os dados
+# correla√ß√£o entre os dados
 cor(dados_RL)
 chart.Correlation(dados_RL, histogram=TRUE, pch=19)
 correlacao_dados_RL = cor(dados_RL)
@@ -69,7 +69,7 @@ corrplot(correlacao_dados_RL, type="upper", order="hclust",col=brewer.pal(n=8, n
 # definindo semente para particoes
 set.seed(2020)
 
-# criando particıes treino e teste com 80% e 20%
+# criando partic√µes treino e teste com 80% e 20%
 TREINO = sample(seq_len(nrow(dados_RL)), size = nrow(dados_RL)*0.8)
 TREINO_RL = dados_RL[TREINO, ]
 TESTE_RL = dados_RL[-TREINO, ]
@@ -82,47 +82,47 @@ dim(TESTE_RL)
 # Aplicando R^2 ajustado, Cp e BIC no conjunto de TREINO_RL
 #========================================================================
 
-# Forcando atÈ 15 variaveis, target È atributo 'aluguel'
+# Forcando at√© 15 variaveis, target √© atributo 'aluguel'
 regfit.NORMAL=regsubsets(aluguel~.,data=TREINO_RL,nvmax = 15, method = "exhaustive")
 regfit.NORMAL=regsubsets(aluguel~area+quartos+banheiros+vagas+andar+animal+mobilhada+condominio+impostos+seguro+sao_paulo+belo_horizonte+rio_de_janeiro+porto_alegre,data = TREINO_RL, nvmax = 14)
 
 summary(regfit.NORMAL)
 
-# Criando sum·rio
+# Criando sum√°rio
 regfit.NORMAL.summary=summary(regfit.NORMAL)
 
-# obtendo melhor conjunto de variaveirs para cada estatÌstica
+# obtendo melhor conjunto de variaveirs para cada estat√≠stica
 max_adjr2.NORMAL = which.max(regfit.NORMAL.summary$adjr2)
 min_cp.NORMAL = which.min(regfit.NORMAL.summary$cp)
 min_bic.NORMAL = which.min( regfit.NORMAL.summary$bic)
 
-# mostrando melhor conjunto de variaveirs para cada estatÌstica
+# mostrando melhor conjunto de variaveirs para cada estat√≠stica
 max_adjr2.NORMAL
 min_cp.NORMAL
 min_bic.NORMAL
 
-# mostrando estatÌsticas para todos atributos
+# mostrando estat√≠sticas para todos atributos
 regfit.NORMAL.summary$adjr2
 regfit.NORMAL.summary$cp
 regfit.NORMAL.summary$bic
 
 #========================================================================
-# Gr·ficos das estatÌsticas R^2 ajustado, Cp e BIC
+# Gr√°ficos das estat√≠sticas R^2 ajustado, Cp e BIC
 #========================================================================
 
 # criando regiao para graficos
 par(mfrow=c(2,3))
 par(mfrow=c(1,2))
 
-# plotando R2 ajustado e destadanco o R2 ajustado maximo para o melhor conjunto de vari·veis
-plot(regfit.NORMAL.summary$adjr2, xlab=" N˙mero de Vari·veis", ylab="R^2 ajustado", type="l")
+# plotando R2 ajustado e destadanco o R2 ajustado maximo para o melhor conjunto de vari√°veis
+plot(regfit.NORMAL.summary$adjr2, xlab=" N√∫mero de Vari√°veis", ylab="R^2 ajustado", type="l")
 points(max_adjr2.NORMAL, regfit.NORMAL.summary$adjr2[max_adjr2.NORMAL], col="red", cex=2, pch=20)
 
-# plotando Cp e destadanco o Cp minimo para o melhor conjunto de vari·veis
+# plotando Cp e destadanco o Cp minimo para o melhor conjunto de vari√°veis
 plot(regfit.NORMAL.summary$cp, xlab=" Numero Variaveis", ylab="Cp", type="l")
 points(min_cp.NORMAL, regfit.NORMAL.summary$cp[min_cp.NORMAL], col="red", cex=2, pch=20)
 
-# plotando BIC e destadanco o BIC minimo para o melhor conjunto de vari·veis
+# plotando BIC e destadanco o BIC minimo para o melhor conjunto de vari√°veis
 plot(regfit.NORMAL.summary$bic, xlab=" Numero Variaveis", ylab="BIC", type="l")
 points(min_bic.NORMAL, regfit.NORMAL.summary$bic[min_bic.NORMAL], col="red", cex=2, pch=20)
 
@@ -137,49 +137,49 @@ coef(regfit.NORMAL, min_cp.NORMAL)
 coef(regfit.NORMAL, min_bic.NORMAL)
 
 #========================================================================
-# SeleÁ„o progressiva - TREINO_RL
+# Sele√ß√£o progressiva - TREINO_RL
 #========================================================================
 
-# usando regsubsets() no conjunto de treino e forcando atÈ 15 variaveis, target È atributo 'aluguel'
+# usando regsubsets() no conjunto de treino e forcando at√© 15 variaveis, target √© atributo 'aluguel'
 regfit.PROG=regsubsets(aluguel~.,TREINO_RL,nvmax=15, method="forward")
 regfit.PROG=regsubsets(aluguel~area+quartos+banheiros+vagas+andar+animal+mobilhada+condominio+impostos+seguro+sao_paulo+belo_horizonte+rio_de_janeiro+porto_alegre,data = TREINO_RL, nvmax = 14, method = "forward")
 summary(regfit.PROG)
 
-# criando sum·rio 
+# criando sum√°rio 
 regfit.PROG.summary=summary(regfit.PROG)
 
-# obtendo melhor conjunto de variaveirs para cada estatÌstica 
+# obtendo melhor conjunto de variaveirs para cada estat√≠stica 
 max_adjr2.PROG <- which.max(regfit.PROG.summary$adjr2)
 min_cp.PROG <- which.min(regfit.PROG.summary$cp)
 min_bic.PROG <- which.min( regfit.PROG.summary$bic)
 
-# mostrando melhor conjunto de variaveis para cada estatÌstica
+# mostrando melhor conjunto de variaveis para cada estat√≠stica
 max_adjr2.PROG
 min_cp.PROG
 min_bic.PROG
 
-# mostrando estatÌsticas para todos atributos
+# mostrando estat√≠sticas para todos atributos
 regfit.PROG.summary$adjr2
 regfit.PROG.summary$cp
 regfit.PROG.summary$bic
 
 #========================================================================
-# SeleÁ„o progressiva - Gr·ficos das estatÌsticas R^2 ajustado, Bic e CP
+# Sele√ß√£o progressiva - Gr√°ficos das estat√≠sticas R^2 ajustado, Bic e CP
 #========================================================================
 
 # criando regiao para graficos
 par(mfrow=c(2,3))
 
-# plotando R^2 ajustado e destacando o R2 ajustado maximo para o melhor conjunto de vari·veis
-plot(regfit.PROG.summary$adjr2, xlab="N˙mero de vari·veis", ylab="R^2 ajustado", type="l")
+# plotando R^2 ajustado e destacando o R2 ajustado maximo para o melhor conjunto de vari√°veis
+plot(regfit.PROG.summary$adjr2, xlab="N√∫mero de vari√°veis", ylab="R^2 ajustado", type="l")
 points(max_adjr2.PROG, regfit.PROG.summary$adjr2[max_adjr2.PROG], col="red", cex=2, pch=20)
 
-# plotando Cp e destacando o Cp minimo para o melhor conjunto de vari·veis
-plot(regfit.PROG.summary$cp, xlab="N˙mero de vari·veis", ylab="Cp", type="l")
+# plotando Cp e destacando o Cp minimo para o melhor conjunto de vari√°veis
+plot(regfit.PROG.summary$cp, xlab="N√∫mero de vari√°veis", ylab="Cp", type="l")
 points(min_cp.PROG, regfit.PROG.summary$cp[min_cp.PROG], col="red", cex=2, pch=20)
 
-# plotando BIC e destacando o BIC minimo para o melhor conjunto de vari·veis
-plot(regfit.PROG.summary$bic, xlab="N˙mero de vari·veis", ylab="BIC", type="l")
+# plotando BIC e destacando o BIC minimo para o melhor conjunto de vari√°veis
+plot(regfit.PROG.summary$bic, xlab="N√∫mero de vari√°veis", ylab="BIC", type="l")
 points(min_bic.PROG, regfit.PROG.summary$bic[min_bic.PROG], col="red", cex=2, pch=20)
 
 # mostrando grafico tipo plot  
@@ -193,48 +193,48 @@ coef(regfit.PROG, min_cp.PROG)
 coef(regfit.PROG, min_bic.PROG)
 
 #========================================================================
-# SeleÁ„o regressiva - TREINO_RL
+# Sele√ß√£o regressiva - TREINO_RL
 #========================================================================
 
-# usando regsubsets() no conjunto de treino e forcando atÈ 15 variaveis, target È atributo 'aluguel'
+# usando regsubsets() no conjunto de treino e forcando at√© 15 variaveis, target √© atributo 'aluguel'
 regfit.REGR=regsubsets(aluguel~.,data=TREINO_RL,nvmax=15, method="backward")
 regfit.REGR = regsubsets(aluguel~area+quartos+banheiros+vagas+andar+animal+mobilhada+condominio+impostos+seguro+sao_paulo+belo_horizonte+rio_de_janeiro+porto_alegre,data = TREINO_RL, nvmax = 14, method = "backward")
 summary(regfit.REGR)
 
-# criando sum·rio
+# criando sum√°rio
 regfit.REGR.summary=summary(regfit.REGR)
 
-# obtendo melhor conjunto de variaveirs para cada estatÌstica
+# obtendo melhor conjunto de variaveirs para cada estat√≠stica
 max_adjr2.REGR <- which.max(regfit.REGR.summary$adjr2)
 min_cp.REGR <- which.min(regfit.REGR.summary$cp)
 min_bic.REGR <- which.min( regfit.REGR.summary$bic)
 
-# mostrando melhor conjunto de variaveis para cada estatÌstica
+# mostrando melhor conjunto de variaveis para cada estat√≠stica
 max_adjr2.REGR
 min_cp.REGR
 min_bic.REGR
 
-# mostrando estatÌsticas para todos atributos
+# mostrando estat√≠sticas para todos atributos
 regfit.REGR.summary$adjr2
 regfit.REGR.summary$cp
 regfit.REGR.summary$bic
 
 #========================================================================
-# SeleÁ„o regressiva - Gr·ficos das estatÌsticas R^2 ajustado, Bic e CP
+# Sele√ß√£o regressiva - Gr√°ficos das estat√≠sticas R^2 ajustado, Bic e CP
 #========================================================================
 
 # criando regiao para graficos
 par(mfrow=c(2,3))
 
-# plotando R^2 ajustado e destacando o R2 ajustado maximo para o melhor conjunto de vari·veis
+# plotando R^2 ajustado e destacando o R2 ajustado maximo para o melhor conjunto de vari√°veis
 plot(regfit.REGR.summary$adjr2, xlab=" Numero Variaveis", ylab="R^2 ajustado", type="l")
 points(max_adjr2.REGR, regfit.REGR.summary$adjr2[max_adjr2.REGR], col="red", cex=2, pch=20)
 
-# plotando Cp e destacando o Cp minimo para o melhor conjunto de vari·veis
+# plotando Cp e destacando o Cp minimo para o melhor conjunto de vari√°veis
 plot(regfit.REGR.summary$cp, xlab=" Numero Variaveis", ylab="Cp", type="l")
 points(min_cp.REGR, regfit.REGR.summary$cp[min_cp.REGR], col="red", cex=2, pch=20)
 
-# plotando BIC e destacando o BIC minimo para o melhor conjunto de vari·veis
+# plotando BIC e destacando o BIC minimo para o melhor conjunto de vari√°veis
 plot(regfit.REGR.summary$bic, xlab=" Numero Variaveis", ylab="BIC", type="l")
 points(min_bic.REGR, regfit.REGR.summary$bic[min_bic.REGR], col="red", cex=2, pch=20)
 
@@ -249,7 +249,7 @@ coef(regfit.REGR, min_cp.REGR)
 coef(regfit.REGR, min_bic.REGR)
 
 #========================================================================
-# ValidaÁ„o cruzada - TREINO_RL
+# Valida√ß√£o cruzada - TREINO_RL
 #========================================================================
 
 # criando funcao predict para ser utilizada na validacao cruzada
@@ -264,19 +264,19 @@ predict.regsubsets=function(object, newdata, id, ...){
 # gerando k=10 subconjuntos para validacao cruzada 
 k=10
 
-# criando indexadores para k conjuntos da validaÁ„o cruzada
+# criando indexadores para k conjuntos da valida√ß√£o cruzada
 folds=sample(1:k,nrow(TREINO_RL),replace=TRUE)
 
 # criando matriz para armazenar MSE de k conjunto de dados 
 VCRZ.errors=matrix(NA,k,14, dimnames=list(NULL, paste(1:14)))
 
 # calculando erro MSE (mean square error) dos subconjuntos da validacao cruzada
-# o laÁo for percorre a lista de atributos variando de 1 a 14 obtidos pelo regsubsets
-# os coeficientes dos atributos s„o armazenados na matriz 'coefi'
-# os coeficientes de 'coefi' s„o multiplicados pelos valores doa atributos da matriz 'train_test.mat"
-# os valores preditos s„o armazenados na matriz 'pred'
-# o MSE de cada conjunto de variareis È armazenado no vetor 'validacao.erros' 
-# gerando matriz 10 x 14 para os MSEs dos conjuntos de validaÁ„o cruzada 
+# o la√ßo for percorre a lista de atributos variando de 1 a 14 obtidos pelo regsubsets
+# os coeficientes dos atributos s√£o armazenados na matriz 'coefi'
+# os coeficientes de 'coefi' s√£o multiplicados pelos valores doa atributos da matriz 'train_test.mat"
+# os valores preditos s√£o armazenados na matriz 'pred'
+# o MSE de cada conjunto de variareis √© armazenado no vetor 'validacao.erros' 
+# gerando matriz 10 x 14 para os MSEs dos conjuntos de valida√ß√£o cruzada 
 for(j in 1:k) {
   best.fit=regsubsets(aluguel~area+quartos+banheiros+vagas+andar+animal+mobilhada+condominio+impostos+seguro+sao_paulo+belo_horizonte+rio_de_janeiro+porto_alegre,data=TREINO_RL[folds!=j,],nvmax=14)
   for(i in 1:14) {
@@ -285,23 +285,23 @@ for(j in 1:k) {
   }
 }
 
-# gerando a mÈdia dos 14 conjuntos de atributos para as 10 subconjuntos de validacao  
+# gerando a m√©dia dos 14 conjuntos de atributos para as 10 subconjuntos de validacao  
 mean.VCRZ.errors=apply(VCRZ.errors, 2, mean)
 
 # obtendo menor erro 
 min_MSE_VCRZ=which.min(mean.VCRZ.errors)
 
-# plotando mÈdia de valores
+# plotando m√©dia de valores
 par(mfrow=c(1,3))
 
-plot(mean.VCRZ.errors, xlab="N˙mero de vari·veis", ylab="MSE Validacao Cruzada", type='l')
+plot(mean.VCRZ.errors, xlab="N√∫mero de vari√°veis", ylab="MSE Validacao Cruzada", type='l')
 points(min_MSE_VCRZ, mean.VCRZ.errors[min_MSE_VCRZ], col="red", cex=2, pch=20)
 
 # selecionando o subconjunto de variaveis no conjunto completo
 regfit.VCRZ=regsubsets(aluguel~.,data=TREINO_RL, nvmax=14)
 regfit.VCRZ=regsubsets(aluguel~area+quartos+banheiros+vagas+andar+animal+mobilhada+condominio+impostos+seguro+sao_paulo+belo_horizonte+rio_de_janeiro+porto_alegre,data=TREINO_RL, nvmax=14)
 
-# mostrando coeficientes do melhor conjunto de variaveis pela validaÁ„o cruzada
+# mostrando coeficientes do melhor conjunto de variaveis pela valida√ß√£o cruzada
 coef(regfit.VCRZ,min_MSE_VCRZ)
 
 #========================================================================
@@ -380,10 +380,10 @@ MSE_REGR.min_bic
 MSE_VCRZ
 
 #========================================================================
-# CriaÁ„o do modelo usando atributos da validaÁ„o cruzada
+# Cria√ß√£o do modelo usando atributos da valida√ß√£o cruzada
 #========================================================================
   
-#Criando modelo no TREINO_RL com os 10 atributos da validaÁ„o cruzada
+#Criando modelo no TREINO_RL com os 10 atributos da valida√ß√£o cruzada
 modelo_VC = lm(aluguel ~ area + quartos + banheiros + vagas + andar + mobilhada + condominio + seguro + sao_paulo + belo_horizonte + porto_alegre,data = TREINO_RL)
 summary(modelo_VC)
 
@@ -391,9 +391,9 @@ summary(modelo_VC)
 preditor = predict(modelo_VC,TESTE_RL)
 preditor
 
-# gerando gr·ficos de previsıes e comparando com atuais
+# gerando gr√°ficos de previs√µes e comparando com atuais
 plot(preditor,type = "l",lty=1.8,col="blue")
-plot(TESTE_RL$aluguel,type = "l",lty = 1.8,col = "red",xlab="PrediÁ„o de Aluguel", ylab="Dados de Teste")
+plot(TESTE_RL$aluguel,type = "l",lty = 1.8,col = "red",xlab="Predi√ß√£o de Aluguel", ylab="Dados de Teste")
 lines(preditor,type = "l",col = "blue")
 
 # Prevendo aluguel no conjunto de dados TREINO_RL
@@ -405,9 +405,9 @@ head(dados_predicao_TREINO_RL)
 dados_predicao_TESTE_RL = data.frame(cbind(Aluguel=TESTE_RL$aluguel,predicao_teste=preditor))
 head(dados_predicao_TESTE_RL)
 
-# gerando correlaÁ„o entre os atributos
+# gerando correla√ß√£o entre os atributos
 correlation_accuracy = cor(dados_predicao_TESTE_RL)
 
-# encontrando acur·cia
+# encontrando acur√°cia
 min_max_accuracy = mean(apply(dados_predicao_TESTE_RL,1,min) / apply(dados_predicao_TESTE_RL, 1, max))
 min_max_accuracy
